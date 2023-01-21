@@ -14,6 +14,9 @@ config :ash, :use_all_identities_in_manage_relationship?, false
 config :feriendaten,
   ecto_repos: [Feriendaten.Repo]
 
+config :feriendaten,
+  ash_apis: [Feriendaten.Geo]
+
 # Configures the endpoint
 config :feriendaten, FeriendatenWeb.Endpoint,
   url: [host: "localhost"],
