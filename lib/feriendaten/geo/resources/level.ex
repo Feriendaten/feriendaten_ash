@@ -22,6 +22,11 @@ defmodule Feriendaten.Geo.Level do
     end
   end
 
+  identities do
+    identity :unique_slug, [:slug]
+    identity :unique_name, [:name]
+  end
+
   attributes do
     uuid_primary_key :id
 
@@ -43,6 +48,6 @@ defmodule Feriendaten.Geo.Level do
     value
     |> String.downcase()
     |> String.replace(~r/[^a-z0-9]+/, "-")
-    |> String.replace(~r/^-+|-+$/, "")
+    |> String.replace(~r/--/, "-")
   end
 end

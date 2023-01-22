@@ -4,16 +4,13 @@ To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
   * Run `mix ash_postgres.create` and `mix ash_postgres.migrate` to create and migrate the database
+  * Run `mix run priv/repo/seeds.exs` to seed the database
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+# Developers
 
-## Learn more
+## Database
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+- Drop the current database with `mix ash_postgres.drop`

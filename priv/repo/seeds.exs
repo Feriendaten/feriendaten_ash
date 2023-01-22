@@ -2,10 +2,17 @@
 #
 #     mix run priv/repo/seeds.exs
 #
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Feriendaten.Repo.insert!(%Feriendaten.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+
+levels_attributes = [
+  %{name: "Land", position: 1},
+  %{name: "Bundesland", position: 2},
+  %{name: "Landkreis", position: 3},
+  %{name: "Stadt", position: 4},
+  %{name: "Schule", position: 5}
+]
+
+for level_attributes <- levels_attributes do
+  Feriendaten.Geo.Level
+  |> Ash.Changeset.for_create(:create, level_attributes)
+  |> Feriendaten.Geo.create!()
+end
