@@ -1,4 +1,4 @@
-defmodule Feriendaten.Geo do
+defmodule Feriendaten.Legacy do
   use Ash.Api
 
   resources do

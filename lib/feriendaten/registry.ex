@@ -1,4 +1,4 @@
-defmodule Feriendaten.Geo.Registry do
+defmodule Feriendaten.Registry do
   use Ash.Registry,
     extensions: [
       # This extension adds helpful compile time validations
@@ -8,5 +8,6 @@ defmodule Feriendaten.Geo.Registry do
   entries do
     entry Feriendaten.Geo.Level
     entry Feriendaten.Geo.Location
+    entry Feriendaten.Legacy.LegacyLocation
   end
 end

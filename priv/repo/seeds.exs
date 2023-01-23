@@ -22,11 +22,11 @@ for level_attributes <- levels_attributes do
 end
 
 {:ok, body} = File.read(File.cwd!() <> "/priv/repo/seeds.d/locations.json")
-locations = Jason.decode!(body)
+seed_locations = Jason.decode!(body)
 
-for location <- locations do
+for seed_location <- seed_locations do
   level_slug =
-    Enum.filter(levels_attributes, fn x -> x.id == location["level_id"] end)
+    Enum.filter(levels_attributes, fn x -> x.id == seed_location["level_id"] end)
     |> hd
     |> Map.get(:name)
     |> String.downcase()
@@ -37,12 +37,24 @@ for location <- locations do
     |> Feriendaten.Geo.read!()
     |> hd()
 
-  Feriendaten.Geo.Location
-  |> Ash.Changeset.for_create(:create, %{
-    name: location["name"],
-    code: location["code"],
-    slug: location["slug"],
-    level_id: level.id
-  })
-  |> Feriendaten.Geo.create!()
+  location =
+    Feriendaten.Geo.Location
+    |> Ash.Changeset.for_create(:create, %{
+      name: seed_location["name"],
+      code: seed_location["code"],
+      slug: seed_location["slug"],
+      level_id: level.id
+    })
+    |> Feriendaten.Geo.create!()
+
+  legacy_location =
+    Feriendaten.Legacy.LegacyLocation
+    |> Ash.Changeset.for_create(:create, %{
+      legacy_id: seed_location["legacy_id"],
+      legacy_name: seed_location["legacy_name"],
+      legacy_slug: seed_location["legacy_slug"],
+      legacy_parent_id: seed_location["legacy_parent_id"],
+      location_id: location.id
+    })
+    |> Feriendaten.Legacy.create!()
 end
