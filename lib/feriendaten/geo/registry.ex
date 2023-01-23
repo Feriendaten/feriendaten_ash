@@ -7,5 +7,6 @@ defmodule Feriendaten.Geo.Registry do
 
   entries do
     entry Feriendaten.Geo.Level
+    entry Feriendaten.Geo.Location
   end
 end

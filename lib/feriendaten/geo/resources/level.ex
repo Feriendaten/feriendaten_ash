@@ -44,6 +44,13 @@ defmodule Feriendaten.Geo.Level do
     update_timestamp :updated_at
   end
 
+  relationships do
+    # `has_many` means that the destination attribute is not unique, therefore many related records could exist.
+    # We assume that the destination attribute is `representative_id` based
+    # on the module name of this resource and that the source attribute is `id`.
+    has_many :locations, Feriendaten.Geo.Location
+  end
+
   defp make_slug(value) do
     value
     |> String.downcase()
