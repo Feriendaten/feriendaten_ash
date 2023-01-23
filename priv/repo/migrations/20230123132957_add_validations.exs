@@ -1,4 +1,4 @@
-defmodule Feriendaten.Repo.Migrations.AddSlugNotNil do
+defmodule Feriendaten.Repo.Migrations.AddValidations do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 
@@ -9,13 +9,13 @@ defmodule Feriendaten.Repo.Migrations.AddSlugNotNil do
 
   def up do
     alter table(:locations) do
-      modify :slug, :text, null: false
+      modify :level_id, :uuid, null: false
     end
   end
 
   def down do
     alter table(:locations) do
-      modify :slug, :text, null: true
+      modify :level_id, :uuid, null: true
     end
   end
 end

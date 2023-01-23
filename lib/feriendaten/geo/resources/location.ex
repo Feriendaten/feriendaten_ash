@@ -16,21 +16,28 @@ defmodule Feriendaten.Geo.Location do
 
     attribute :name, :string do
       allow_nil? false
+      constraints max_length: 255
     end
 
-    attribute :code, :string
+    attribute :code, :string, constraints: [max_length: 3]
 
     attribute :slug, :string do
       allow_nil? false
+      constraints max_length: 255
     end
 
     create_timestamp :inserted_at
     update_timestamp :updated_at
   end
 
+  validations do
+    validate present([:name, :slug])
+  end
+
   relationships do
     belongs_to :level, Feriendaten.Geo.Level do
       attribute_writable? true
+      allow_nil? false
     end
   end
 
