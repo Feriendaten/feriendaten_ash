@@ -36,13 +36,18 @@ defmodule Feriendaten.Geo.Location do
 
   relationships do
     belongs_to :level, Feriendaten.Geo.Level do
-      attribute_writable? true
       allow_nil? false
     end
   end
 
   actions do
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :update, :destroy]
+
+    create(:create) do
+      argument :level_id, :string
+      primary? true
+      change manage_relationship(:level_id, :level, type: :append_and_remove)
+    end
   end
 
   # changes do
