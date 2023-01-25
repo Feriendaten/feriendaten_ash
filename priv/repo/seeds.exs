@@ -7,6 +7,8 @@
 
 require Ash.Query
 
+# Create levels
+#
 levels_attributes = [
   %{id: 1, name: "Land", position: 1},
   %{id: 2, name: "Bundesland", position: 2},
@@ -21,6 +23,12 @@ for level_attributes <- levels_attributes do
   |> Feriendaten.Geo.create!()
 end
 
+# Load Schools from JSON
+{:ok, body} = File.read(File.cwd!() <> "/priv/repo/seeds.d/schools.json")
+seed_schools = Jason.decode!(body)
+
+# Create locations
+#
 {:ok, body} = File.read(File.cwd!() <> "/priv/repo/seeds.d/locations.json")
 seed_locations = Jason.decode!(body)
 
@@ -57,4 +65,53 @@ for seed_location <- seed_locations do
       location_id: location.id
     })
     |> Feriendaten.Legacy.create!()
+
+  # Find school with location_id == seed_location["id"]
+  case Enum.filter(seed_schools, fn x -> x["location_id"] == seed_location["id"] end) do
+    [seed_school] ->
+      Feriendaten.Geo.School
+      |> Ash.Changeset.for_create(:create, %{
+        line1: seed_school["line1"],
+        street: seed_school["street"],
+        zip_code: seed_school["zip_code"],
+        city: seed_school["city"],
+        email: seed_school["email"],
+        url: seed_school["url"],
+        phone: seed_school["phone"],
+        fax: seed_school["fax"],
+        lon: seed_school["lon"],
+        lat: seed_school["lat"],
+        school_type: seed_school["school_type"],
+        location_id: location.id
+      })
+      |> Feriendaten.Geo.create!()
+
+    _ ->
+      nil
+  end
 end
+
+# Create schools
+#
+# {:ok, body} = File.read(File.cwd!() <> "/priv/repo/seeds.d/schools.json")
+# seed_schools = Jason.decode!(body)
+
+# for seed_school <- seed_schools do
+#   school =
+#     Feriendaten.Geo.School
+#     |> Ash.Changeset.for_create(:create, %{
+#       line1: seed_school["line1"],
+#       street: seed_school["street"],
+#       zip_code: seed_school["zip_code"],
+#       city: seed_school["city"],
+#       email: seed_school["email"],
+#       url: seed_school["url"],
+#       phone: seed_school["phone"],
+#       fax: seed_school["fax"],
+#       lon: seed_school["lon"],
+#       lat: seed_school["lat"],
+#       school_type: seed_school["school_type"],
+#       location_id: seed_school["location_id"]
+#     })
+#     |> Feriendaten.Geo.create!()
+# end

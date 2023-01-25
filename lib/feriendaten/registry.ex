@@ -9,5 +9,6 @@ defmodule Feriendaten.Registry do
     entry Feriendaten.Geo.Level
     entry Feriendaten.Geo.Location
     entry Feriendaten.Legacy.LegacyLocation
+    entry Feriendaten.Geo.School
   end
 end
