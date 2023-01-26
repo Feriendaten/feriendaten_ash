@@ -1,5 +1,10 @@
 defmodule Feriendaten.Geo do
-  use Ash.Api
+  use Ash.Api,
+    extensions: [AshAdmin.Api]
+
+  admin do
+    show?(true)
+  end
 
   resources do
     # This defines the set of resources that can be used with this API

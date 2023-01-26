@@ -1,6 +1,8 @@
 defmodule FeriendatenWeb.Router do
   use FeriendatenWeb, :router
 
+  import AshAdmin.Router
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -12,6 +14,11 @@ defmodule FeriendatenWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/" do
+    pipe_through :browser
+    ash_admin("/admin")
   end
 
   scope "/", FeriendatenWeb do
