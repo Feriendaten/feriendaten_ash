@@ -8,7 +8,13 @@ defmodule Feriendaten.Geo.School do
   end
 
   actions do
-    defaults [:read, :update, :destroy]
+    defaults [:update, :destroy]
+
+    read :read do
+      # add this if you’re overriding the primary read
+      primary? true
+      pagination offset?: true, keyset?: true
+    end
 
     create(:create) do
       argument :location_id, :string

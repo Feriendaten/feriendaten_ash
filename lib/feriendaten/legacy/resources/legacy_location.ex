@@ -38,7 +38,13 @@ defmodule Feriendaten.Legacy.LegacyLocation do
   end
 
   actions do
-    defaults [:read]
+    defaults []
+
+    read :read do
+      # add this if you’re overriding the primary read
+      primary? true
+      pagination offset?: true, keyset?: true
+    end
 
     create(:create) do
       argument :location_id, :string
